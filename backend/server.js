@@ -6,8 +6,16 @@ const cors = require('cors');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const axios = require('axios'); // Pastikan axios sudah terinstal
 const app = express();
-const port = process.env.PORT || 3001;
-app.use(cors({ origin: 'http://localhost:3000' }));
+const port = process.env.PORT || 3000;
+const corsOptions = {
+    origin: 'https://localhost:3000', // perhatikan https!
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  };
+  
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 app.use(express.json({ limit: '50mb' }));
 // Inisialisasi Google Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
