@@ -11,7 +11,7 @@
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
     <AppDomain>https://www.contoso.com</AppDomain>
-    <AppDomain>intelligem-production.up.railway.app</AppDomain>
+    <AppDomain>intelligem-production-10d1.up.railway.app</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Document"/>
