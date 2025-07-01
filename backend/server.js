@@ -7,7 +7,8 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const axios = require('axios'); // Pastikan axios sudah terinstal
 const app = express();
 const port = process.env.PORT || 3001;
-
+app.use(cors());
+app.use(express.json({ limit: '50mb' }));
 // Inisialisasi Google Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 if (!GEMINI_API_KEY) {
@@ -25,8 +26,7 @@ const GOOGLE_CSE_CX_ID = process.env.GOOGLE_CSE_CX_ID;
 const Google_Search_URL = 'https://www.googleapis.com/customsearch/v1';
 
 // Middleware
-app.use(cors());
-app.use(express.json({ limit: '50mb' })); // Tingkatkan limit body parser untuk gambar Base64
+ // Tingkatkan limit body parser untuk gambar Base64
 
 async function callOpenRouter(userPrompt, selectedText, fullDocumentText) {
     // const url = "https://openrouter.ai/api/v1/chat/completions";
