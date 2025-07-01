@@ -277,10 +277,10 @@ app.post('/api/intelligem', async (req, res) => {
                 
                     const fullGeminiParts = []; 
                     if (parsed.category == "TANPA_KONTEKS_TEKS_DOKUMEN") {
-                        fullGeminiParts.push({ text: no_contextPrompt }, ...kebutuhan.slice(1))
+                        fullGeminiParts.push({ text: no_contextPrompt+kebutuhan }, )
                     }
                     else{
-                        fullGeminiParts.push({ text: geminiPrompt }, ...kebutuhan.slice(1))
+                        fullGeminiParts.push({ text: geminiPrompt+kebutuhan }, )
                     }
                     
                     const result = await model.generateContent(fullGeminiParts);
