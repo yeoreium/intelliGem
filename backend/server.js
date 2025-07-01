@@ -19,8 +19,12 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization']
   };
   
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+  app.use(cors(corsOptions));
+  app.options('/api/intelligem', cors(corsOptions), (req,res)=> {
+    // langsung jawab preflight
+    res.sendStatus(200);
+  });
+  
 
 app.use(express.json({ limit: '50mb' }));
 // Inisialisasi Google Gemini API
@@ -277,10 +281,10 @@ app.post('/api/intelligem', async (req, res) => {
                 
                     const fullGeminiParts = []; 
                     if (parsed.category == "TANPA_KONTEKS_TEKS_DOKUMEN") {
-                        fullGeminiParts.push({ text: no_contextPrompt+kebutuhan }, )
+                        fullGeminiParts.push({ text: no_contextPrompt+"\n"+kebutuhan }, )
                     }
                     else{
-                        fullGeminiParts.push({ text: geminiPrompt+kebutuhan }, )
+                        fullGeminiParts.push({ text: geminiPrompt+"\n"+kebutuhan }, )
                     }
                     
                     const result = await model.generateContent(fullGeminiParts);
