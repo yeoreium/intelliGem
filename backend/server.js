@@ -18,12 +18,16 @@ const corsOptions = {
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   };
-  
-  app.use(cors(corsOptions));
-  app.options('/api/intelligem', cors(corsOptions), (req,res)=> {
-    // langsung jawab preflight
-    res.sendStatus(200);
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');        // atau '*'
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    next();
   });
+  
   
 
 app.use(express.json({ limit: '50mb' }));
@@ -281,10 +285,16 @@ app.post('/api/intelligem', async (req, res) => {
                 
                     const fullGeminiParts = []; 
                     if (parsed.category == "TANPA_KONTEKS_TEKS_DOKUMEN") {
-                        fullGeminiParts.push({ text: no_contextPrompt+"\n"+kebutuhan }, )
+                        fullGeminiParts.push(
+                            { text: no_contextPrompt },
+                            { text: kebutuhan }
+                          );
                     }
                     else{
-                        fullGeminiParts.push({ text: geminiPrompt+"\n"+kebutuhan }, )
+                        fullGeminiParts.push(
+                            { text: geminiPrompt },
+                            { text: kebutuhan }
+                          );
                     }
                     
                     const result = await model.generateContent(fullGeminiParts);
