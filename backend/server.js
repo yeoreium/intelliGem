@@ -8,7 +8,13 @@ const axios = require('axios'); // Pastikan axios sudah terinstal
 const app = express();
 const port = process.env.PORT || 3000;
 const corsOptions = {
-    origin: 'https://localhost:3000', // perhatikan https!
+    origin: [
+        'http://localhost:3000',
+        'https://localhost:3000',
+        'http://127.0.0.1:3000',
+        'https://127.0.0.1:3000'
+      ],
+     // perhatikan https!
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   };
