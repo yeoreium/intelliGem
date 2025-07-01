@@ -5,7 +5,7 @@ const { marked } = require("marked");
 /* global document, Office, Word, btoa, marked */ // Tambahkan 'marked' di sini
 
 // URL ke backend Node.js kamu
-const BACKEND_URL = "http://localhost:3001/api/intelligem";
+const BACKEND_URL = "intelligem-production.up.railway.app/api/intelligem";
 
 // State management untuk halaman
 let currentPage = 'welcome-page';
