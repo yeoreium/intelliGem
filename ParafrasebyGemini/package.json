@@ -13,8 +13,7 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "vercel-build": "npm run build",
-    "build:dev": "webpack --mode development",
+    "build:dev": "npx webpack --mode development",
     "dev-server": "webpack serve --mode development",
     "lint": "office-addin-lint check",
     "lint:fix": "office-addin-lint fix",
@@ -53,7 +52,7 @@
     "source-map-loader": "^5.0.0",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "5.1.0"
+    "webpack-dev-server": "^5.2.2"
   },
   "prettier": "office-addin-prettier-config",
   "browserslist": [
