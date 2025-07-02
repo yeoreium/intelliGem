@@ -22,7 +22,7 @@ const Google_Search_URL = 'https://www.googleapis.com/customsearch/v1';
 // ✅ SEKARANG INISIALISASI GEMINI DENGAN AMAN
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); // Updated model
-const modelpro = genAI.getGenerativeModel({ model: "gemini-2.0-flash-thinking-exp" });
+const modelpro = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // ✅ JANGAN LOG API KEY
 console.log('Gemini AI initialized successfully');
@@ -103,7 +103,7 @@ async function callOpenRouter(userPrompt, selectedText, fullDocumentText) {
     `;
 
     try {
-        const result = await model.generateContent(AI_SYSTEM_INSTRUCTION);
+        const result = await modelpro.generateContent(AI_SYSTEM_INSTRUCTION);
         const response = await result.response;
         console.log('Classification result:', response.text());
         return response.text();
@@ -177,18 +177,20 @@ app.post('/api/intelligem', async (req, res) => {
 1. Baca "Perintah Pengguna" dengan cermat.
 2. Output HARUS berupa JSON yang valid, TIDAK mengandung markdown, komentar, spasi ekstra, atau teks lain di luar JSON.
 3. explanation WAJIB informatif, ringkas, dan mudah dipahami.
+4. explanation berisikan jawaban anda SEBAGAI INTELLIGEM kepada PENGGUNA INTELLIGEM, BUKAN SAYA, jadi USAHAKAN untuk tetap INTERAKTIF.
 
 ## INSTRUKSI UTAMA
 - ANALISIS konteks dan tentukan apakah permintaan membutuhkan actionable_text.
 - Jika actionable_text diperlukan, hasilkan teks yang benar-benar siap pakai, relevan, dan berkualitas.
-- Jika tidak, explanation harus tetap informatif dan actionable_text null.
+- Jika tidak, explanation harus tetap informatif dan actionable_text null, oh ya JANGAN bahas mengenai actionable_text pada explanation.
 
 # Format RESPONSE JSON yang menjadi JAWABAN anda (TANPA mengandung markdown, komentar, atau teks lain di luar JSON)
 {
     "perlu_actionable": true or false,
-    "explanation": "Jawaban kamu mengenai Perintah Pengguna, harus jelas dan informatif.",
+    "explanation": "Jawaban kamu mengenai Perintah Pengguna (bukan saya) SEBAGAI INTELLIGEM, harus jelas dan informatif.",
     "actionable_text": "actionable text jika diperlukan"
-}`;
+}
+#REMINDER: explanation merupakan jawabanmu sebagai INTELLIGEM. FOKUS pada Perintah Pengguna di bawah.`;
 
             const geminiPrompt = `
 ## PERAN DAN TUJUAN
