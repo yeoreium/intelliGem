@@ -21,54 +21,21 @@ const Google_Search_URL = 'https://www.googleapis.com/customsearch/v1';
 
 // ✅ SEKARANG INISIALISASI GEMINI DENGAN AMAN
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" }); // Updated model
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); // Updated model
 const modelpro = genAI.getGenerativeModel({ model: "gemini-2.0-flash-thinking-exp" });
 
 // ✅ JANGAN LOG API KEY
 console.log('Gemini AI initialized successfully');
 
-// ✅ CORS CONFIGURATION YANG BENAR - UPDATE BAGIAN INI
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Izinkan requests tanpa origin (mobile apps, etc.)
-        if (!origin) return callback(null, true);
-        
-        const allowedOrigins = [
-            'http://localhost:3000',
-            'https://localhost:3000',  // Tambahkan HTTPS
-            'http://127.0.0.1:3000',
-            'https://127.0.0.1:3000',
-            // Tambahkan domain production jika ada
-            // 'https://yourdomain.com'
-        ];
-        
-        // Cek apakah origin diizinkan
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            console.log('CORS blocked origin:', origin);
-            callback(null, true); // Sementara izinkan semua untuk testing
-        }
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: [
-        'Content-Type', 
-        'Authorization', 
-        'X-Requested-With',
-        'Accept',
-        'Origin',
-        'Access-Control-Request-Method',
-        'Access-Control-Request-Headers'
-    ],
+// ✅ SIMPLIFIED CORS CONFIGURATION
+app.use(cors({
+    origin: true, // Allow all origins for now
     credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus: 200
-};
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
+}));
 
-app.use(cors(corsOptions));
 
-// ✅ TAMBAHKAN EXPLICIT OPTIONS HANDLER
-app.options('*', cors(corsOptions));
 
 // ✅ TAMBAHKAN MANUAL CORS HEADERS SEBAGAI BACKUP
 app.use((req, res, next) => {
