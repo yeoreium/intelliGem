@@ -27,23 +27,66 @@ const modelpro = genAI.getGenerativeModel({ model: "gemini-2.0-flash-thinking-ex
 // ✅ JANGAN LOG API KEY
 console.log('Gemini AI initialized successfully');
 
-// ✅ CORS CONFIGURATION YANG BENAR
+// ✅ CORS CONFIGURATION YANG BENAR - UPDATE BAGIAN INI
 const corsOptions = {
-    origin: [
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-        // Tambahkan domain production jika ada
-        // 'https://yourdomain.com'
+    origin: function (origin, callback) {
+        // Izinkan requests tanpa origin (mobile apps, etc.)
+        if (!origin) return callback(null, true);
+        
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'https://localhost:3000',  // Tambahkan HTTPS
+            'http://127.0.0.1:3000',
+            'https://127.0.0.1:3000',
+            // Tambahkan domain production jika ada
+            // 'https://yourdomain.com'
+        ];
+        
+        // Cek apakah origin diizinkan
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.log('CORS blocked origin:', origin);
+            callback(null, true); // Sementara izinkan semua untuk testing
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+        'Content-Type', 
+        'Authorization', 
+        'X-Requested-With',
+        'Accept',
+        'Origin',
+        'Access-Control-Request-Method',
+        'Access-Control-Request-Headers'
     ],
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
 
-// ✅ MIDDLEWARE
+// ✅ TAMBAHKAN EXPLICIT OPTIONS HANDLER
+app.options('*', cors(corsOptions));
+
+// ✅ TAMBAHKAN MANUAL CORS HEADERS SEBAGAI BACKUP
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
+// ✅ MIDDLEWARE - LETAKKAN SETELAH CORS
 app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true }));
+
 
 async function callOpenRouter(userPrompt, selectedText, fullDocumentText) {
     const AI_SYSTEM_INSTRUCTION = `

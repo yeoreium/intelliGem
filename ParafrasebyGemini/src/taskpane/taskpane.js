@@ -196,7 +196,6 @@ async function callIntelligemAPI(userPrompt, selectedText, selectedImageBase64, 
             headers: {
                 "Content-Type": "application/json",
             },
-            mode: "no-cors",
             body: JSON.stringify(payload),
             
         });
