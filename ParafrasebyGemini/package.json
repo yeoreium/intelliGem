@@ -23,7 +23,6 @@
     "start": "office-addin-debugging start manifest.xml",
     "stop": "office-addin-debugging stop manifest.xml",
     "validate": "office-addin-manifest validate manifest.xml",
-    "postinstall": "chmod +x ./node_modules/.bin/webpack",
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
