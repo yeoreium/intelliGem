@@ -17,7 +17,7 @@
     <Host Name="Document"/>
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://intelli-gem-v9k4.vercel.app/taskpane.html"/>
+    <SourceLocation DefaultValue="https://intelli-gem.vercel.app/taskpane.html"/>
   </DefaultSettings>
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
