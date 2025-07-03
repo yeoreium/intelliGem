@@ -289,6 +289,7 @@ function addMessageToChat(sender, explanation, perluActionable = null, originalC
             const actionableTextBox = document.createElement('div');
             actionableTextBox.classList.add('ai-actionable-text-box'); // Class CSS baru
             const actionable_text_html = `<div style="font-size: 12pt; color: red;">${marked.parse(actionableText)}</div>`
+            console.log(actionable_text_html);
             actionableTextBox.innerHTML = marked.parse(actionableText); // Tampilkan actionable_text di sini
             messageDiv.appendChild(actionableTextBox);
 
