@@ -1098,6 +1098,34 @@ ul {
     animation: shimmer 2s infinite;
 }
 
+.actionable-text-html {
+    font-size: 12px;
+}
+.actionable-text-html p {
+    font-size: 12px;
+}
+.actionable-text-html ul {
+    font-size: 12px;
+}
+.actionable-text-html ol {
+    font-size: 12px;
+}
+.actionable-text-html li {
+    font-size: 12px;
+}
+.actionable-text-html h1 {
+    font-size: 12px;
+}
+.actionable-text-html h2 {
+    font-size: 12px;
+}
+.actionable-text-html h3 {
+    font-size: 12px;
+}
+.actionable-text-html h4 {
+    font-size: 12px;
+}
+
 /* Loading Animation */
 @keyframes pulse {
     0%, 100% {
