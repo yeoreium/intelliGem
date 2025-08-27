@@ -21,7 +21,7 @@ const Google_Search_URL = 'https://www.googleapis.com/customsearch/v1';
 
 // ✅ SEKARANG INISIALISASI GEMINI DENGAN AMAN
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); // Updated model
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Updated model
 const modelpro = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // ✅ JANGAN LOG API KEY
